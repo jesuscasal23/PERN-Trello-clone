@@ -1,12 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { AddTaskText } from './styledComponents'
 import { Card, Row, Input, Button } from 'antd'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { createNewTodo } from '../../api'
+import { useQueryClient } from 'react-query'
 
-const AddEntryToggle = ({ onSubmit }) => {
+import { useMutation } from 'react-query'
+
+const AddEntryToggle = ({ categoryId }) => {
+  const queryClient = useQueryClient()
+  const addTodo = useMutation(createNewTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos')
+    },
+  })
+
   const [isActive, setIsActive] = useState(false)
-
+  const [newTaskValues, setNewTaskValue] = useState()
   const addTaskInput = useRef(null)
-  const ToggleContainer = useRef(null)
 
   useEffect(() => {
     if (isActive) {
@@ -20,27 +31,29 @@ const AddEntryToggle = ({ onSubmit }) => {
     )
   }
 
+  const handlesubmit = () => {
+    addTodo.mutate({ description: newTaskValues, list_order: 3, categoryId })
+    setNewTaskValue('')
+    setIsActive(false)
+  }
+
   return (
-    <div
-      ref={ToggleContainer}
-      onBlur={e => {
-        console.log(
-          'on blur was executed',
-          ToggleContainer.current,
-          e.target,
-          'element that was clicked is inside container',
-          ToggleContainer.current.contains(e.target)
-        )
-        if (!ToggleContainer.current.contains(e.target)) {
-          setIsActive(false)
-        }
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        setIsActive(false)
+        setNewTaskValue('')
       }}>
       <Card style={{ marginBottom: '10px' }}>
-        <Input ref={addTaskInput} />
+        <Input
+          value={newTaskValues}
+          ref={addTaskInput}
+          onChange={e => setNewTaskValue(e.target.value)}
+        />
         <Row>
           <Button
             style={{ margin: '10px 10px 10px 0px' }}
-            onClick={() => console.log(addTaskInput)}>
+            onClick={handlesubmit}
+            disabled={!newTaskValues}>
             Add task
           </Button>
           <p
@@ -50,7 +63,7 @@ const AddEntryToggle = ({ onSubmit }) => {
           </p>
         </Row>
       </Card>
-    </div>
+    </OutsideClickHandler>
   )
 }
 

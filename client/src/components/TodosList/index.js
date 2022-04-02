@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import { Card, message, Row } from 'antd'
+import React from 'react'
+import { Card, Row } from 'antd'
 import { fetchTodosByCategoryId, deleteTask } from '../../api'
 import AddEntryToggle from '../AddEntryToggle'
-
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import NewTodoModal from '../../components/NewTodoModal'
+import { useQueryClient } from 'react-query'
+import { useQuery, useMutation } from 'react-query'
 
 const TodosList = ({ categoryId }) => {
   const queryCache = useQueryClient()
-  const [openNewTodoModal, setOpenNewTodoModal] = useState(false)
 
   const { data: todos, status } = useQuery(['todos', categoryId], () =>
     fetchTodosByCategoryId(categoryId)
@@ -34,12 +32,6 @@ const TodosList = ({ categoryId }) => {
 
   return (
     <>
-      <NewTodoModal
-        categoryId={categoryId}
-        isOpen={openNewTodoModal}
-        setIsOpen={setOpenNewTodoModal}
-      />
-
       {todos.data.map((todo, i) => {
         return (
           <Card style={{ marginBottom: '10px' }} key={todo.id}>
@@ -55,7 +47,7 @@ const TodosList = ({ categoryId }) => {
         )
       })}
 
-      <AddEntryToggle />
+      <AddEntryToggle categoryId={categoryId} />
     </>
   )
 }
