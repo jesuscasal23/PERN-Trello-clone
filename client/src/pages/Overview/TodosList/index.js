@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Row } from 'antd'
-import { fetchTodosByCategoryId, deleteTask } from '../../api'
+import { fetchTodosByCategoryId, deleteTask } from '../../../api'
 import AddEntryToggle from '../AddEntryToggle'
 import { useQueryClient } from 'react-query'
 import { useQuery, useMutation } from 'react-query'

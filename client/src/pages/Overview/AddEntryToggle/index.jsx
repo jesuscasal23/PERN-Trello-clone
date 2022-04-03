@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { AddTaskText } from './styledComponents'
-import { Card, Row, Input, Button } from 'antd'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { createNewTodo } from '../../api'
-import { useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
+import { Card, Row, Input, Button } from 'antd'
 
-import { useMutation } from 'react-query'
+import { AddTaskText } from '../../../sharedStyledComponents'
+import { createNewTodo } from '../../../api'
 
 const AddEntryToggle = ({ categoryId }) => {
   const queryClient = useQueryClient()
@@ -27,7 +26,7 @@ const AddEntryToggle = ({ categoryId }) => {
 
   if (!isActive) {
     return (
-      <AddTaskText onClick={() => setIsActive(true)}>add Task +</AddTaskText>
+      <AddTaskText onClick={() => setIsActive(true)}>Add Task +</AddTaskText>
     )
   }
 

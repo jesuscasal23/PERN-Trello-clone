@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
-import TodosList from '../../components/TodosList'
-import Layout from '../../components/Layout'
-import { Button, Row } from 'antd'
+import React from 'react'
+import { Row } from 'antd'
+import { useQuery } from 'react-query'
+
+import { fetchCategories } from '../../api'
 import { TaskContainer } from './styledComponents'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { fetchCategories, createNewCategory } from '../../api'
+
+import Layout from '../../Layout'
+import TodosList from './TodosList'
+import AddCategoryToggle from './AddCategoryToggle'
 
 const Overview = () => {
   const { data: categories, status } = useQuery('categories', fetchCategories)
-  const queryCache = useQueryClient()
-
-  const addCategory = useMutation(createNewCategory, {
-    onSuccess: () => {
-      queryCache.invalidateQueries('categories')
-    },
-  })
 
   if (status === ('loading' || 'error')) {
     return <Layout />
@@ -23,22 +19,28 @@ const Overview = () => {
   return (
     <Layout>
       <Row
+        wrap={false}
         style={{
           marginLeft: '20px',
         }}>
         {categories.data.map(category => {
           return (
-            <TaskContainer key={category.id}>
-              <h3>{category.name}</h3>
-              <TodosList categoryId={category.id} />
-            </TaskContainer>
+            <div>
+              <TaskContainer key={category.id}>
+                <AddCategoryToggle
+                  categoryName={category?.name}
+                  categoryId={category.id}
+                />
+                <TodosList categoryId={category.id} />
+              </TaskContainer>
+            </div>
           )
         })}
-        <TaskContainer>
-          <Button onClick={() => addCategory.mutate({ name: 'new category' })}>
-            Add Category
-          </Button>
-        </TaskContainer>
+        <div>
+          <TaskContainer>
+            <AddCategoryToggle />
+          </TaskContainer>
+        </div>
       </Row>
     </Layout>
   )
