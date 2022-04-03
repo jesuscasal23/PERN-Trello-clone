@@ -43,6 +43,24 @@ const createNewCategory = async category => {
   }
 }
 
+const editCategory = async category => {
+  try {
+    const response = await fetch(
+      'http://localhost:3000/category/' + category.id,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: category.name }),
+      }
+    )
+    return response.json()
+  } catch (err) {
+    return 'could not post Category, ' + err
+  }
+}
+
 const deleteTask = async todoId => {
   try {
     const response = await fetch(
@@ -67,4 +85,5 @@ export {
   createNewCategory,
   fetchTodosByCategoryId,
   deleteTask,
+  editCategory,
 }

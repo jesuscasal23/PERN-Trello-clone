@@ -3,7 +3,6 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 module.exports = function (app) {
-  //tested
   app.get('/todos/all', async (req, res) => {
     try {
       const allTasks = await prisma.tasks.findMany()
@@ -21,7 +20,6 @@ module.exports = function (app) {
     }
   })
 
-  // tested
   app.get('/todos/:categoryId', async (req, res) => {
     try {
       const allTasks = await prisma.tasks.findMany({
@@ -42,7 +40,7 @@ module.exports = function (app) {
 
   app.delete('/todos/:todoId', async (req, res) => {
     const idForDeletion = parseInt(req.params.todoId)
-    console.log(idForDeletion)
+
     try {
       const deletedTasks = await prisma.tasks.deleteMany({
         where: { id: idForDeletion },
@@ -60,7 +58,6 @@ module.exports = function (app) {
     }
   })
 
-  // tested
   app.post('/todos', async (req, res) => {
     try {
       const insertedTodo = await prisma.tasks.create({

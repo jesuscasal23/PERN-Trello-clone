@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { createNewCategory } from '../../../api'
+import { createNewCategory, editCategory } from '../../../api'
 import { Button, Card, Input, Row } from 'antd'
 import { AddTaskText } from '../../../sharedStyledComponents'
 import OutsideClickHandler from 'react-outside-click-handler'
@@ -17,18 +17,30 @@ const AddCategoryToggle = ({ categoryName, categoryId }) => {
     },
   })
 
+  const updateCategory = useMutation(editCategory, {
+    onSuccess: () => {
+      queryCache.invalidateQueries('categories')
+    },
+  })
+
   const handleSubmit = () => {
+    if (categoryId) {
+      updateCategory.mutate({ id: categoryId, name: newCategoryValue })
+      setIsActive(false)
+      return
+    }
     addCategory.mutate({ name: newCategoryValue })
+    setIsActive(false)
   }
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive && addCategoryInput?.current) {
       addCategoryInput.current.focus()
     }
   }, [isActive])
 
-  if (categoryName) {
-    return <h3>{categoryName}</h3>
+  if (categoryName && !isActive) {
+    return <h3 onClick={() => setIsActive(true)}>{categoryName}</h3>
   }
 
   if (!isActive) {
@@ -56,7 +68,7 @@ const AddCategoryToggle = ({ categoryName, categoryId }) => {
             style={{ margin: '10px 10px 10px 0px' }}
             onClick={handleSubmit}
             disabled={!newCategoryValue}>
-            Add Category
+            {categoryName ? 'Edit category name' : 'Add category'}
           </Button>
           <p
             style={{ marginTop: '20px', cursor: 'pointer' }}
