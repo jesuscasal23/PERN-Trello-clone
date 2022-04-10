@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node index.jx",
-    "heroku-postbuild": "cd client && npm install && npm run build && yarn run prisma db push "
+    "heroku-postbuild": "cd client && yarn install && yarn run build && yarn run prisma db push "
   },
   "author": "",
   "license": "ISC",
