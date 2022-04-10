@@ -9,7 +9,8 @@
     "yarn": "1.22.18"
   },
   "scripts": {
-    "start": "npm index.js",
+    "start": "node index.js",
+    "build": "prisma generate",
     "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "author": "",
