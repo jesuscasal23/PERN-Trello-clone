@@ -25,8 +25,8 @@ const Overview = () => {
         }}>
         {categories.data.map(category => {
           return (
-            <div>
-              <TaskContainer key={category.id}>
+            <div key={category.id}>
+              <TaskContainer>
                 <AddCategoryToggle
                   categoryName={category?.name}
                   categoryId={category.id}
