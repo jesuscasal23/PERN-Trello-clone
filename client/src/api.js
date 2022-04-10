@@ -1,21 +1,21 @@
 const fetchCategories = async () => {
-  const res = await fetch('http://localhost:3000/category')
+  const res = await fetch('/category')
   return res.json()
 }
 
 const fetchTodos = async () => {
-  const res = await fetch('http://localhost:3000/todos/all')
+  const res = await fetch('/todos/all')
   return res.json()
 }
 
 const fetchTodosByCategoryId = async categoryId => {
-  const res = await fetch('http://localhost:3000/todos/' + categoryId)
+  const res = await fetch('/todos/' + categoryId)
   return res.json()
 }
 
 const createNewTodo = async todo => {
   try {
-    const response = await fetch('http://localhost:3000/todos', {
+    const response = await fetch('/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const createNewTodo = async todo => {
 
 const createNewCategory = async category => {
   try {
-    const response = await fetch('http://localhost:3000/category', {
+    const response = await fetch('/category', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,16 +45,13 @@ const createNewCategory = async category => {
 
 const editCategory = async category => {
   try {
-    const response = await fetch(
-      'http://localhost:3000/category/' + category.id,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: category.name }),
-      }
-    )
+    const response = await fetch('/category/' + category.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: category.name }),
+    })
     return response.json()
   } catch (err) {
     return 'could not post Category, ' + err
@@ -63,15 +60,12 @@ const editCategory = async category => {
 
 const deleteTask = async todoId => {
   try {
-    const response = await fetch(
-      'http://localhost:3000/todos/' + todoId.todoId,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    const response = await fetch('/todos/' + todoId.todoId, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     return response.json()
   } catch (err) {
     return 'could not post Category, ' + err
