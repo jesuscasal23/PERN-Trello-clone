@@ -8,9 +8,12 @@
     "npm": "8.5.0",
     "yarn": "1.22.18"
   },
+  "prisma": {
+  "schema": "prisma/schema.prisma"
+},
   "scripts": {
     "start": "node index.jx",
-    "heroku-postbuild": "cd client && yarn install && yarn run build && npx prisma migrate deploy "
+    "heroku-postbuild": "cd client && yarn install && yarn run build && npx prisma migrate deploy"
   },
   "author": "",
   "license": "ISC",
