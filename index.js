@@ -21,6 +21,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'))
 })
 
-app.listen(port, () => {
-  console.log('server running on port: ' + port)
+app.listen(process.env.PORT || port, () => {
+  console.log('server running on port: ' + process.env.PORT || port)
 })
