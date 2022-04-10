@@ -9,6 +9,7 @@
     "yarn": "1.22.18"
   },
   "scripts": {
+    "start": "npm index.js",
     "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "author": "",
