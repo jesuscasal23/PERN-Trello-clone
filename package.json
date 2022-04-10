@@ -8,9 +8,6 @@
     "npm": "8.5.0",
     "yarn": "1.22.18"
   },
-  "prisma": {
-  "schema": "prisma/schema.prisma"
-},
   "scripts": {
     "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
