@@ -12,7 +12,6 @@
   "schema": "prisma/schema.prisma"
 },
   "scripts": {
-    "start": "node index.jx",
     "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "author": "",
