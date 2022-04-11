@@ -3,7 +3,11 @@ import { Row } from 'antd'
 import { useQuery } from 'react-query'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { fetchCategories } from '../../api'
-import { TaskContainer } from './styledComponents'
+import {
+  TaskContainer,
+  HorizontalScrollbar,
+  VerticalScrollbar,
+} from './styledComponents'
 
 import Layout from '../../Layout'
 import TodosList from './TodosList'
@@ -18,7 +22,7 @@ const Overview = () => {
 
   return (
     <Layout>
-      <Scrollbars style={{ width: '99%', height: '90vh' }}>
+      <HorizontalScrollbar style={{ width: '99%', height: '90vh' }}>
         <Row
           wrap={false}
           style={{
@@ -26,13 +30,10 @@ const Overview = () => {
           }}>
           {categories.data.map(category => {
             return (
-              <Scrollbars
+              <VerticalScrollbar
                 key={category.id}
                 style={{
                   height: '89vh',
-                  width: '300px',
-                  marginRight: '20px',
-                  minWidth: '270px',
                 }}>
                 <TaskContainer>
                   <AddCategoryToggle
@@ -41,7 +42,7 @@ const Overview = () => {
                   />
                   <TodosList categoryId={category.id} />
                 </TaskContainer>
-              </Scrollbars>
+              </VerticalScrollbar>
             )
           })}
           <div style={{ minWidth: '270px' }}>
@@ -50,7 +51,7 @@ const Overview = () => {
             </TaskContainer>
           </div>
         </Row>
-      </Scrollbars>
+      </HorizontalScrollbar>
     </Layout>
   )
 }

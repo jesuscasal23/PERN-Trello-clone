@@ -9,9 +9,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build/index.html')))
-}
+app.use(express.static(path.join(__dirname, 'client/build/index.html')))
 
 require('./routes/categories')(app)
 require('./routes/tasks')(app)
