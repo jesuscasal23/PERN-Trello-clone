@@ -8,7 +8,7 @@ const Background = styled.div`
 
 const Navbar = () => {
   return (
-    <Menu mode='horizontal' style={{ marginBottom: '40px' }}>
+    <Menu mode='horizontal' style={{ marginBottom: '20px' }}>
       <Menu.Item key='start'>start</Menu.Item>
       <Menu.Item key='app' disabled>
         logout
