@@ -11,6 +11,7 @@ export const VerticalScrollbar = styled(Scrollbars)`
   width: 300px;
   margin-right: 20px;
   min-width: 270px;
+  max-width: 300px;
 `
 
 export const HorizontalScrollbar = styled(Scrollbars)`
